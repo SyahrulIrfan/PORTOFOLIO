@@ -4,6 +4,8 @@
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
   const IMG = "assets/img/";
+  // Bump on every image change: GitHub Pages lets browsers cache files for 10 minutes under the same name.
+  const V = "?v=3";
 
   const UI = {
     en: {
@@ -336,7 +338,7 @@
     list.innerHTML = WORK.map((p, i) => `
       <li class="row">
         <button type="button" class="row__btn" data-slug="${p.slug}" aria-haspopup="dialog">
-          <span class="row__thumb" aria-hidden="true">${p.cover ? `<img src="${IMG}${p.cover}-sm.webp" alt="" loading="lazy" width="720" height="405">` : typeCover(p)}</span>
+          <span class="row__thumb" aria-hidden="true">${p.cover ? `<img src="${IMG}${p.cover}-sm.webp${V}" alt="" loading="lazy" width="720" height="405">` : typeCover(p)}</span>
           <span class="row__n">${String(i + 1).padStart(2, "0")}</span>
           <span class="row__title">${p.title}</span>
           <span class="row__meta"><b>${L(p.kind)}</b>${p.year}</span>
@@ -366,7 +368,7 @@
       active = b.dataset.slug;
       const p = WORK.find(w => w.slug === active);
       const node = document.createElement("div");
-      node.innerHTML = p.cover ? `<img src="${IMG}${p.cover}-sm.webp" alt="">` : typeCover(p);
+      node.innerHTML = p.cover ? `<img src="${IMG}${p.cover}-sm.webp${V}" alt="">` : typeCover(p);
       const el = node.firstElementChild;
       pvIn.appendChild(el);
       requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add("in")));
@@ -384,7 +386,7 @@
   let current = null, lastFocus = null;
 
   function img(src, alt, eager) {
-    return `<div class="shot__img"><img src="${IMG}${src}.webp" alt="${alt}" ${eager ? "" : 'loading="lazy"'} onload="this.classList.add('ok')" onerror="this.parentNode.classList.add('err');this.parentNode.textContent='${t("imgFail")}'"></div>`;
+    return `<div class="shot__img"><img src="${IMG}${src}.webp${V}" alt="${alt}" ${eager ? "" : 'loading="lazy"'} onload="this.classList.add('ok')" onerror="this.parentNode.classList.add('err');this.parentNode.textContent='${t("imgFail")}'"></div>`;
   }
   function road(p) {
     const steps = ROADS[p.slug] || [];
