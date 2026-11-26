@@ -31,7 +31,7 @@
       "contact.copy": "Copy email address", copied: "Copied to clipboard.", copyFail: "Could not copy. Select the address above instead.",
       "foot.top": "Back to top",
       "case.close": "Close",
-      role: "Role", when: "When", stack: "Stack", link: "Live site", next: "Next project",
+      role: "Role", when: "When", stack: "Stack", link: "Live site", next: "Next project", visit: "Visit", newTab: "opens in a new tab",
       imgFail: "Image did not load."
     },
     id: {
@@ -59,7 +59,7 @@
       "contact.copy": "Salin alamat email", copied: "Tersalin ke clipboard.", copyFail: "Gagal menyalin. Pilih alamat di atas secara manual.",
       "foot.top": "Kembali ke atas",
       "case.close": "Tutup",
-      role: "Peran", when: "Waktu", stack: "Teknologi", link: "Situs", next: "Proyek berikutnya",
+      role: "Peran", when: "Waktu", stack: "Teknologi", link: "Situs", next: "Proyek berikutnya", visit: "Kunjungi", newTab: "terbuka di tab baru",
       imgFail: "Gambar gagal dimuat."
     }
   };
@@ -98,9 +98,17 @@
         id: "Dua jalur reservasi. <span>Pasien lama</span> langsung terkonfirmasi lewat nomor HP. <span>Pasien baru</span> menjawab pertanyaan skrining yang menjadi draf anamnesis untuk dokter."
       },
       shots: [
-        { src: "untuku-erm", cls: "", cap: { en: "Staff reservation board: confirm or reject each incoming booking.", id: "Papan reservasi staf: konfirmasi atau tolak tiap reservasi masuk." } },
-        { src: "untuku-slot", cls: "half phone", cap: { en: "Patient picks a date and a free slot.", id: "Pasien memilih tanggal dan slot kosong." } },
-        { src: "untuku-done", cls: "half phone", cap: { en: "Booking received, waiting for clinic confirmation.", id: "Reservasi diterima, menunggu konfirmasi klinik." } }
+        { src: "untuku-cover", cls: "", cap: { en: "Staff dashboard: today's queue, doctors on duty, and monthly numbers.", id: "Dashboard staf: antrean hari ini, dokter praktik, dan angka bulanan." } },
+        { src: "untuku-anam", cls: "half", cap: { en: "Examination starts with anamnesis, with an allergy warning on top.", id: "Pemeriksaan dimulai dari anamnesis, dengan peringatan alergi di atas." } },
+        { src: "untuku-odonto", cls: "half", cap: { en: "Odontogram with FDI notation per tooth surface.", id: "Odontogram dengan notasi FDI per permukaan gigi." } }
+      ],
+      phonesTitle: { en: "Patient booking on mobile", id: "Reservasi pasien di ponsel" },
+      phones: [
+        { src: "untuku-pas1", cap: { en: "1. Choose a treatment", id: "1. Pilih perawatan" } },
+        { src: "untuku-pas3", cap: { en: "2. Pick a date and slot", id: "2. Pilih tanggal dan jam" } },
+        { src: "untuku-pas6", cap: { en: "3a. Returning patient: pick from the list", id: "3a. Pasien lama: pilih dari daftar" } },
+        { src: "untuku-pas7", cap: { en: "3b. New patient: data and screening", id: "3b. Pasien baru: data dan skrining" } },
+        { src: "untuku-pas8", cap: { en: "4. Confirmed with a booking code", id: "4. Terkonfirmasi dengan kode booking" } }
       ]
     },
     {
@@ -208,8 +216,11 @@
       },
       shots: [
         { src: "tv-home", cls: "", cap: { en: "Home with continue watching.", id: "Beranda dengan lanjutkan menonton." } },
-        { src: "tv-pair", cls: "half", cap: { en: "Sign in with a QR code or email code.", id: "Masuk dengan kode QR atau kode email." } },
-        { src: "tv-detail", cls: "half", cap: { en: "Title detail.", id: "Rincian tayangan." } }
+        { src: "tv-detail", cls: "half", cap: { en: "Title detail with one primary action.", id: "Rincian tayangan dengan satu aksi utama." } },
+        { src: "tv-pair", cls: "half", cap: { en: "Sign in with a QR code or an email code.", id: "Masuk dengan kode QR atau kode email." } },
+        { src: "tv-crown", cls: "half", cap: { en: "Blue Crown catalog, rent or buy by chapter.", id: "Katalog Blue Crown, sewa atau beli per chapter." } },
+        { src: "tv-sosok", cls: "half", cap: { en: "SosokPedia reader laid out as a book spread.", id: "Pembaca SosokPedia dalam bentuk buku terbuka." } },
+        { src: "tv-profile", cls: "", cap: { en: "Profile with member card and preferences.", id: "Profil dengan kartu member dan preferensi." } }
       ]
     },
     {
@@ -244,6 +255,45 @@
       shots: []
     }
   ];
+
+  // Roadmap phases per project: [phase EN, phase ID, items EN, items ID]. Same facts as `did`, grouped by stage.
+  const ROADS = {
+    "untuku-dental": [
+      ["Discover", "Gali", ["Interviewed dentists and admin staff", "Question list and requirements checklist"], ["Wawancara dokter dan admin", "Daftar pertanyaan dan checklist kebutuhan"]],
+      ["Define", "Rumuskan", ["Membership PRD v1 to v3", "E-RM PRD v1.0 to v1.2", "Scope and UAT acceptance criteria"], ["PRD membership v1 sampai v3", "PRD E-RM v1.0 sampai v1.2", "Cakupan dan kriteria UAT"]],
+      ["Plan", "Rencanakan", ["Architecture document", "Phased timeline and cost proposal", "Aligned with SATUSEHAT"], ["Dokumen arsitektur", "Timeline bertahap dan penawaran biaya", "Selaras dengan SATUSEHAT"]],
+      ["Design", "Rancang", ["Flows for six clinic roles in FigJam", "60+ screens in Figma"], ["Alur enam peran klinik di FigJam", "60+ layar di Figma"]],
+      ["Build", "Bangun", ["Next.js, NestJS, PostgreSQL monorepo", "WhatsApp OTP for patients"], ["Monorepo Next.js, NestJS, PostgreSQL", "OTP WhatsApp untuk pasien"]]
+    ],
+    "villa-ar-bali": [
+      ["Define", "Rumuskan", ["Business goals and product metrics", "Personas: guest, admin, owner, housekeeping"], ["Tujuan bisnis dan metrik produk", "Persona: tamu, admin, pemilik, housekeeping"]],
+      ["Scope", "Cakupan", ["Booking engine", "Xendit: QRIS, virtual account, e-wallet", "Manual transfer fallback", "Admin dashboard"], ["Booking engine", "Xendit: QRIS, virtual account, e-wallet", "Cadangan transfer manual", "Dashboard admin"]],
+      ["Design", "Rancang", ["Responsive booking flow", "Admin views for mobile"], ["Alur booking responsif", "Tampilan admin untuk ponsel"]],
+      ["Build", "Bangun", ["Next.js and PostgreSQL", "Docker on a VPS"], ["Next.js dan PostgreSQL", "Docker di VPS"]],
+      ["Launch", "Rilis", ["SEO setup with Google Search Console", "Live at villaarbali.com"], ["SEO dengan Google Search Console", "Live di villaarbali.com"]]
+    ],
+    "fajar-bahari": [
+      ["Define", "Rumuskan", ["Multi-band platform", "Solo and band modes"], ["Platform multi-band", "Mode solo dan band"]],
+      ["Rules", "Aturan", ["Confirmed dates close automatically", "Approval flow for personnel schedules"], ["Tanggal terkonfirmasi tertutup otomatis", "Alur persetujuan jadwal personel"]],
+      ["Design", "Rancang", ["Band sites and availability calendars", "Manager and personnel dashboards"], ["Situs band dan kalender ketersediaan", "Dashboard manajer dan personel"]],
+      ["Build", "Bangun", ["One Next.js app, one site per domain", "Image CMS"], ["Satu aplikasi Next.js, satu situs per domain", "CMS gambar"]],
+      ["Launch", "Rilis", ["nginx and PM2", "Live at fajarbahari.id"], ["nginx dan PM2", "Live di fajarbahari.id"]]
+    ],
+    "dms-android-tv": [
+      ["Rules", "Aturan", ["Remote focus states", "Safe areas", "Text contrast for TV distance"], ["Fokus remote", "Area aman layar", "Kontras teks untuk jarak TV"]],
+      ["System", "Sistem", ["49 color styles, 58 text styles", "140 components, four themes", "Shared with mobile"], ["49 color style, 58 text style", "140 komponen, empat tema", "Dipakai bersama mobile"]],
+      ["Screens", "Layar", ["128 screens at 1920x1080", "Home, detail, profile, My List, downloads, SosokPedia"], ["128 layar 1920x1080", "Beranda, rincian, profil, Daftar Saya, unduhan, SosokPedia"]],
+      ["Sign-in", "Masuk", ["Web-to-TV code pairing", "No typing with a remote"], ["Pairing kode dari web ke TV", "Tanpa mengetik dengan remote"]],
+      ["Handoff", "Serah terima", ["WCAG AA checks on color pairs", "Rules documented for developers"], ["Cek WCAG AA pasangan warna", "Aturan terdokumentasi untuk developer"]]
+    ],
+    "mediease": [
+      ["Research", "Riset", ["Competitive benchmarking", "Survey and user interviews", "Users aged 18 to 55"], ["Competitive benchmarking", "Survei dan wawancara pengguna", "Pengguna usia 18 sampai 55"]],
+      ["Insight", "Temuan", ["Faster booking", "Clear doctor schedules", "Simple flow"], ["Booking lebih cepat", "Jadwal dokter jelas", "Alur sederhana"]],
+      ["PRD", "PRD", ["Assumptions and MVP scope", "User stories, acceptance criteria", "Out-of-scope list"], ["Asumsi dan cakupan MVP", "User story, acceptance criteria", "Daftar di luar cakupan"]],
+      ["Roadmap", "Roadmap", ["Feature prioritization", "Quarterly OKRs"], ["Prioritas fitur", "OKR per kuartal"]],
+      ["Evaluate", "Evaluasi", ["Heuristic evaluation", "UX copy rewrite"], ["Evaluasi heuristik", "Penulisan ulang UX copy"]]
+    ]
+  };
 
   let saved = null;
   try { saved = localStorage.getItem("lang"); } catch (e) {}
@@ -336,6 +386,34 @@
   function img(src, alt, eager) {
     return `<div class="shot__img"><img src="${IMG}${src}.webp" alt="${alt}" ${eager ? "" : 'loading="lazy"'} onload="this.classList.add('ok')" onerror="this.parentNode.classList.add('err');this.parentNode.textContent='${t("imgFail")}'"></div>`;
   }
+  function road(p) {
+    const steps = ROADS[p.slug] || [];
+    const k = lang === "id" ? 1 : 0;
+    return `
+      <section class="road" aria-labelledby="road-title">
+        <div class="road__head">
+          <h3 id="road-title">${lang === "id" ? "Yang saya kerjakan" : "What I did"}</h3>
+          <p>${lang === "id" ? "Peta kerja saya di proyek ini, tahap demi tahap." : "My work on this project, stage by stage."}</p>
+        </div>
+        <ol class="road__list" style="--n:${steps.length}">
+          ${steps.map((s, i) => `
+            <li class="road__step" style="--i:${i}">
+              <span class="road__dot" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
+              <h4>${s[k]}</h4>
+              <ul>${s[2 + k].map(x => `<li>${x}</li>`).join("")}</ul>
+            </li>`).join("")}
+        </ol>
+      </section>`;
+  }
+  let roadIO = null;
+  function watchRoad() {
+    const r = $(".road", body);
+    if (!r) return;
+    if (reduce || !("IntersectionObserver" in window)) { r.classList.add("on"); return; }
+    if (roadIO) roadIO.disconnect();
+    roadIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("on"); roadIO.disconnect(); } }), { root: scroller, threshold: .25 });
+    roadIO.observe(r);
+  }
   function renderCase(p, scrollTop = true) {
     const i = WORK.indexOf(p), nx = WORK[(i + 1) % WORK.length];
     const facts = [
@@ -350,15 +428,18 @@
     body.innerHTML = `
       <p class="case__kicker">${L(p.kicker)}</p>
       <h2 class="case__title" id="case-title">${p.title}</h2>
+      ${p.url ? `<a class="case__visit" href="${p.url}" target="_blank" rel="noopener">${t("visit")} ${p.url.replace("https://", "")}<span aria-hidden="true"> ↗</span><span class="sr"> (${t("newTab")})</span></a>` : ""}
       <dl class="case__facts">${facts.map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`).join("")}</dl>
       ${hero}
       <section class="case__sec"><h3>${lang === "id" ? "Konteks" : "Context"}</h3><div>${L(p.context).map(x => `<p>${x}</p>`).join("")}</div></section>
       ${targets}
-      <section class="case__sec"><h3>${lang === "id" ? "Yang saya kerjakan" : "What I did"}</h3><ul>${L(p.did).map(x => `<li>${x}</li>`).join("")}</ul></section>
+      ${road(p)}
       <p class="case__quote">${L(p.decision)}</p>
+      ${p.phones ? `<section class="phones"><h3>${L(p.phonesTitle)}</h3><div class="phones__row" tabindex="0" aria-label="${L(p.phonesTitle)}">${p.phones.map(s => `<figure>${img(s.src, L(s.cap))}<figcaption>${L(s.cap)}</figcaption></figure>`).join("")}</div></section>` : ""}
       ${p.shots.some(s => s.src !== p.cover) ? `<div class="shots">${p.shots.filter(s => s.src !== p.cover).map(s => `<figure class="${s.cls}">${img(s.src, L(s.cap))}<figcaption>${L(s.cap)}</figcaption></figure>`).join("")}</div>` : ""}
       <button type="button" class="case__next" data-slug="${nx.slug}"><small>${t("next")}</small><strong>${nx.title}</strong></button>`;
     if (scrollTop) scroller.scrollTop = 0;
+    watchRoad();
   }
 
   function openCase(slug) {
